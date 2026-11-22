@@ -368,6 +368,22 @@ export function createRenderer(canvas) {
     ctx.fillText(label, x + 8, y + 14);
   }
 
+  // Small architectural tags painted on the floor so every required element
+  // (atrium, camera, loot, exit) names itself inside the frame.
+  function drawArenaLabels() {
+    ctx.textAlign = 'center';
+    ctx.font = `bold 12px ${FONT}`;
+    ctx.fillStyle = 'rgba(232, 237, 243, 0.42)';
+    ctx.fillText('VAULT ATRIUM', 480, 565);
+    ctx.font = `bold 11px ${FONT}`;
+    ctx.fillStyle = 'rgba(239, 68, 68, 0.55)';
+    ctx.fillText('CCTV-01', 480, 94);
+    ctx.fillStyle = 'rgba(250, 204, 21, 0.55)';
+    ctx.fillText('TARGET: AMBER CROWN', 480, 368);
+    ctx.fillStyle = 'rgba(52, 211, 153, 0.55)';
+    ctx.fillText('EXTRACTION', 880, 442);
+  }
+
   function drawWorld(world, mouse) {
     drawFloor();
     drawLoot(world);
@@ -380,6 +396,7 @@ export function createRenderer(canvas) {
     drawCamera(world);
     drawThief(world);
     drawRipples(world);
+    drawArenaLabels();
     drawTooltip(world, mouse);
     if (world.spotted && world.phase === 'play') {
       ctx.strokeStyle = `rgba(239, 68, 68, ${0.5 + 0.3 * Math.sin(world.time * 8)})`;
@@ -409,8 +426,10 @@ export function createRenderer(canvas) {
     centreText('WASD / ARROWS move    SHIFT sneak    CLICK throw EMP jammer', 300, `14px ${FONT}`, PALETTE.text);
     centreText('E grab the crown / hack the camera panel    P pause    M mute    R restart', 326, `14px ${FONT}`, PALETTE.text);
     centreText('Guards see in amber cones. Cameras sweep in red. At 100% alarm the pavilion locks down.', 360, `13px ${FONT}`, PALETTE.muted);
+    centreText('GILDED WIRE • TACTICAL ARCHITECTURAL HEIST • REAL-TIME RAYCAST STEALTH', 392, `bold 13px ${FONT}`, PALETTE.thiefRing);
+    centreText('3 Multi-Room Galleries • Raycast Guard Sightlines • Sweeping CCTV • EMP Mouse Gadgets • Live Alarm Escalation', 412, `12px ${FONT}`, PALETTE.muted);
     const pulse = 0.6 + 0.4 * Math.sin(world.time * 3);
-    centreText('PRESS SPACE OR CLICK TO START', 430, `bold 18px ${FONT}`, `rgba(248, 250, 252, ${pulse})`);
+    centreText('PRESS SPACE OR CLICK TO START', 452, `bold 18px ${FONT}`, `rgba(248, 250, 252, ${pulse})`);
   }
 
   function drawPaused() {
@@ -427,6 +446,7 @@ export function createRenderer(canvas) {
     centreText(`TIME  ${fmtTime(world.time)}`, 270, `bold 18px ${FONT}`, PALETTE.text);
     centreText(`PEAK ALARM  ${Math.round(world.peakAlarm)}%`, 302, `16px ${FONT}`, PALETTE.text);
     centreText(`CAMERAS DISABLED  ${world.camerasDisabled}      JAMMERS USED  ${world.jammersUsed}`, 334, `16px ${FONT}`, PALETTE.text);
+    centreText('GILDED WIRE • TACTICAL ARCHITECTURAL HEIST • REAL-TIME RAYCAST STEALTH', 372, `12px ${FONT}`, PALETTE.thiefRing);
     centreText('PRESS R TO PLAY AGAIN', 410, `bold 16px ${FONT}`, PALETTE.text);
   }
 
